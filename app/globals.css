@@ -1,4 +1,5 @@
-@import "tailwindcss" source(none);
+@import "tailwindcss";
+@source "../app";
 @source "../src";
 @import "tw-animate-css";
 
@@ -154,6 +155,20 @@
   }
 }
 
-@keyframes q-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
-@utility animate-q-in { animation: q-in 280ms ease-out both; }
-body { font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
+@keyframes q-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@utility animate-q-in {
+  animation: q-in 280ms ease-out both;
+}
+body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
