@@ -42,7 +42,8 @@ function Index() {
       const t = e.target as HTMLElement;
       if (t.tagName === "INPUT" || t.tagName === "TEXTAREA") return;
       const n = Number(e.key);
-      if (n >= 1 && n <= q.answers.length) select(q.answers[n - 1].id);
+      const a = q.answers[n - 1];
+      if (n >= 1 && a) select(a.id);
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
