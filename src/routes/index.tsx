@@ -23,7 +23,7 @@ function Index() {
   const [index, setIndex] = useState(0);
   const [responses, setResponses] = useState<Record<number, string>>({});
   const [done, setDone] = useState(false);
-  const q = questions[index];
+  const q = questions[index]!;
   const selected = responses[q.id];
   const total = questions.length;
   const progress = Math.round(((done ? total : index) / total) * 100);
