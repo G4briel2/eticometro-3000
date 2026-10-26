@@ -65,7 +65,7 @@ export default function Page() {
             <span className="font-heading text-lg font-bold">Eticômetro</span>
           </a>
           <div className="col-span-2 w-full max-w-[360px] justify-self-center py-3 sm:col-span-1">
-            <div className="flex flex-row justify-between w-full">
+            <div className="mb-1 flex flex-row justify-between w-full">
               <span className="text-xs text-muted-foreground">Seu progresso</span>
               <span className="text-xs text-muted-foreground">{index}/{total}</span>
             </div>

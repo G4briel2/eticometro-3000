@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
+  icons: {
+    icon: { url: "/favicon.svg", type: "image/svg+xml" },
+  },
   title: "Eticômetro — Avaliação ética profissional",
   description:
     "Avaliação ética de situações e dilemas do ambiente corporativo.",
