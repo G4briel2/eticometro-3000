@@ -5,6 +5,7 @@ import { ArrowLeft, ArrowRight, Check } from "lucide-react";
 import { questions } from "../data/questions";
 import { cn } from "../lib/utils";
 import { Badge } from "../components/ui/badge";
+import { ResultsRadar } from "../components/results-radar";
 
 const LETTERS = ["A", "B", "C", "D"];
 
@@ -64,7 +65,10 @@ export default function Page() {
             <span className="font-heading text-lg font-bold">Eticômetro</span>
           </a>
           <div className="col-span-2 w-full max-w-[360px] justify-self-center py-3 sm:col-span-1">
-            <span className="text-xs text-muted-foreground">Seu progresso</span>
+            <div className="flex flex-row justify-between w-full">
+              <span className="text-xs text-muted-foreground">Seu progresso</span>
+              <span className="text-xs text-muted-foreground">{index}/{total}</span>
+            </div>
             <div
               className="h-1.5 w-full overflow-hidden rounded-full bg-track"
               role="progressbar"
@@ -81,7 +85,7 @@ export default function Page() {
             <div className="relative pt-2">
               <span
                 className="absolute top-1 -translate-x-1/2 rounded bg-primary px-1.5 py-1 text-[10px] font-medium leading-none text-primary-foreground tabular-nums transition-[left] duration-500 after:absolute after:left-1/2 after:bottom-full after:-translate-x-1/2 after:border-4 after:border-transparent after:border-b-primary"
-                style={{ left: `clamp(2px, ${progress}%, calc(100% - 20px))` }}
+                style={{ left: `clamp(2px, ${progress}%, calc(100% - 0px))` }}
                 aria-hidden="true"
               >
                 {progress}%
@@ -101,12 +105,13 @@ export default function Page() {
               AVALIAÇÃO CONCLUÍDA
             </p>
             <h1 className="max-w-[720px] text-[24px] font-medium leading-snug md:text-[32px]">
-              Obrigado pela participação. Suas respostas foram registradas.
+              Conheça suas tendências nas situações apresentadas.
             </h1>
             <p className="mt-5 max-w-[620px] text-muted-foreground">
               Você respondeu {Object.keys(responses).length} de {total}{" "}
               situações.
             </p>
+            <ResultsRadar responses={responses} />
             <button
               onClick={() => {
                 setDone(false);
