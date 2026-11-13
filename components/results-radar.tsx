@@ -56,7 +56,6 @@ export function ResultsRadar({
             <ChartTooltip
               content={
                 <ChartTooltipContent
-                  labelKey="label"
                   formatter={(value) => (
                     <span className="font-medium">{value} / 100</span>
                   )}
@@ -88,8 +87,7 @@ export function ResultsRadar({
               </dd>
             </div>
             <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
-              {axis.description} Base: {axis.answered} de {axis.total}{" "}
-              situações.
+              {axis.description}
             </p>
           </div>
         ))}
@@ -97,8 +95,8 @@ export function ResultsRadar({
       <p className="mt-6 border-t border-border pt-4 text-xs leading-relaxed text-muted-foreground">
         Cada eixo considera a média dos pontos das respostas associadas,
         convertida para a escala de 0 a 100. Uma situação pode contribuir para
-        mais de um eixo. Esta é uma atividade educativa; o resultado não é uma
-        medida validada da ética de uma pessoa.
+        mais de um eixo. O resultado não é armazenado e nem disponível
+        publicamente.
       </p>
     </section>
   );
