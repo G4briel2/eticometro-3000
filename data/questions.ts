@@ -432,4 +432,34 @@ export const questions: Question[] = [
       },
     ],
   },
+  {
+    id: 15,
+    axes: ["integrity", "respect"],
+    categories: ["Integridade", "Respeito"],
+    scenario:
+      "Durante uma reunião com a liderança, você recebe elogios por uma proposta desenvolvida em conjunto com uma colega que não pôde participar. Ninguém menciona a contribuição dela.",
+    question: "Como você agiria?",
+    answers: [
+      {
+        id: "a",
+        score: 2,
+        text: "Agradeceria pelo elogio e reconheceria a contribuição da colega em uma conversa particular com ela.",
+      },
+      {
+        id: "b",
+        score: 0,
+        text: "Aceitaria o elogio sem mencionar a colega, já que fui responsável por apresentar a proposta.",
+      },
+      {
+        id: "c",
+        score: 3,
+        text: "Enviaria um resumo após a reunião, registrando a contribuição de cada pessoa para a proposta.",
+      },
+      {
+        id: "d",
+        score: 4,
+        text: "Agradeceria pelo elogio e explicaria, na própria reunião, como a colega contribuiu para a proposta.",
+      },
+    ],
+  },
 ];

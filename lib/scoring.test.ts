@@ -32,7 +32,7 @@ describe("questionnaire scoring", () => {
     );
     const results = calculateResults(responses);
     expect(results.every((axis) => axis.score === 100)).toBe(true);
-    expect(results.map((axis) => axis.total)).toEqual([4, 4, 4, 3, 3, 3]);
+    expect(results.map((axis) => axis.total)).toEqual([5, 4, 4, 3, 4, 3]);
   });
 
   it("keeps missing and invalid answers pending instead of scoring zero", () => {

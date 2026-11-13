@@ -8,23 +8,76 @@ import { Badge } from "../components/ui/badge";
 import { ResultsRadar } from "../components/results-radar";
 
 const LETTERS = ["A", "B", "C", "D"];
+const PROGRESS_KEY = "eticometro:progress";
 
 export default function Page() {
   const [index, setIndex] = useState(0);
   const [responses, setResponses] = useState<Record<number, string>>({});
   const [done, setDone] = useState(false);
+  const [restored, setRestored] = useState(false);
   const q = questions[index]!;
   const selected = responses[q.id];
   const total = questions.length;
   const progress = Math.round(((done ? total : index) / total) * 100);
 
-  const select = (id: string) => setResponses((r) => ({ ...r, [q.id]: id }));
+  const select = (id: string) => {
+    if (restored) setResponses((r) => ({ ...r, [q.id]: id }));
+  };
   const next = () => {
     if (!selected) return;
     if (index < total - 1) setIndex(index + 1);
     else setDone(true);
   };
   const back = () => index > 0 && setIndex(index - 1);
+
+  useEffect(() => {
+    try {
+      const raw = window.localStorage.getItem(PROGRESS_KEY);
+      if (!raw) return;
+      const saved = JSON.parse(raw);
+      const validResponses: Record<number, string> = {};
+      for (const question of questions) {
+        const answer = question.answers.find(
+          ({ id }) => id === saved?.responses?.[question.id],
+        );
+        if (answer) validResponses[question.id] = answer.id;
+      }
+
+      const firstUnanswered = questions.findIndex(
+        ({ id }) => !validResponses[id],
+      );
+      const savedIndex = questions.findIndex(
+        ({ id }) => id === saved?.questionId,
+      );
+      const lastReachable =
+        firstUnanswered === -1 ? questions.length - 1 : firstUnanswered;
+      setResponses(validResponses);
+      setIndex(
+        savedIndex === -1 ? lastReachable : Math.min(savedIndex, lastReachable),
+      );
+      setDone(saved?.done === true && firstUnanswered === -1);
+    } catch {
+      // The questionnaire remains available if storage is blocked or unreadable.
+    } finally {
+      setRestored(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!restored) return;
+    try {
+      if (Object.keys(responses).length === 0) {
+        window.localStorage.removeItem(PROGRESS_KEY);
+      } else {
+        window.localStorage.setItem(
+          PROGRESS_KEY,
+          JSON.stringify({ responses, questionId: q.id, done }),
+        );
+      }
+    } catch {
+      // Keep the current progress in memory if storage is unavailable.
+    }
+  }, [restored, responses, q.id, done]);
 
   useEffect(() => {
     if (done) return;
@@ -41,7 +94,7 @@ export default function Page() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <header className="fixed inset-x-0 top-0 z-50 border-b border-border bg-background/20 backdrop-blur-md">
+      <header className="fixed inset-x-0 py-4 sm:py-0 z-50 border-b border-border bg-background/20 backdrop-blur-md">
         <div className="mx-auto grid min-h-20 max-w-[1100px] grid-cols-[auto_1fr] sm:grid-cols-[1fr_minmax(0,360px)_1fr] items-center gap-4 px-5 md:px-10">
           <a
             href="/"
@@ -66,8 +119,12 @@ export default function Page() {
           </a>
           <div className="col-span-2 w-full max-w-[360px] justify-self-center py-3 sm:col-span-1">
             <div className="mb-1 flex flex-row justify-between w-full">
-              <span className="text-xs text-muted-foreground">Seu progresso</span>
-              <span className="text-xs text-muted-foreground">{index}/{total}</span>
+              <span className="text-xs text-muted-foreground">
+                Seu progresso
+              </span>
+              <span className="text-xs text-muted-foreground">
+                {index}/{total}
+              </span>
             </div>
             <div
               className="h-1.5 w-full overflow-hidden rounded-full bg-track"

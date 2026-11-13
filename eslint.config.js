@@ -6,7 +6,21 @@ import reactRefresh from "eslint-plugin-react-refresh";
 import tseslint from "typescript-eslint";
 
 export default tseslint.config(
-  { ignores: ["dist", ".output", ".vinxi", ".next", "components/ui/**", "lib/**", "data/**", "test/**", "hooks/**", "app/styles.d.ts"] },
+  {
+    ignores: [
+      "dist",
+      ".output",
+      ".vinxi",
+      ".next",
+      "next-env.d.ts",
+      "components/ui/**",
+      "lib/**",
+      "data/**",
+      "test/**",
+      "hooks/**",
+      "app/styles.d.ts",
+    ],
+  },
   {
     extends: [js.configs.recommended, ...tseslint.configs.recommended],
     files: ["**/*.{ts,tsx}"],
@@ -37,4 +51,5 @@ export default tseslint.config(
     },
   },
   eslintPluginPrettier,
+  { rules: { "prettier/prettier": ["error", { endOfLine: "auto" }] } },
 );
